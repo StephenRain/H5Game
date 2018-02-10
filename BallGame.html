@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/myreset.css"/>
+		<style type="text/css">
+		
+			 .all{
+			 	position: fixed;
+			 	left: 0px;
+			 	top: 0px;
+			 	right: 0px;
+			 	bottom: 0px;
+			 	background-image: url(img/7.jpg);
+			 	background-position: right bottom;
+			 }
+			 
+			#game{
+				
+				/*position: fixed;*/
+				width: 600px;
+				margin: 20px auto ;
+				background: transparent;
+				height: 500px;
+				border:4px solid orangered;
+				left: 300px;
+				top: 50px;
+			}
+			.footer{
+				height: 200px;
+			}
+			.top{
+				position: fixed;
+				top: 0px;
+				right: 0px;
+				background: rgba(0,0,0,0.5);
+				text-align: center;
+				line-height: 100%;
+				font-size: 20px;
+				color: darkmagenta;
+				font-family: "黑体";
+				
+			}
+			/*玩家球*/
+			#playBoll{
+				position: absolute;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				background: red;
+				left:888px;
+				top: 463px;
+				cursor: pointer;
+			}
+			/*.cover{
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom:0;
+				background: rgba(0,0,0,0.6);
+				display: none;
+			}*/
+			#start{
+				position:fixed;
+				right: 0px;
+				bottom: 0px;
+				width: 315px;
+				height: 100px;
+				background: rgba(255, 165, 0,0.5);
+				border: 1px solid blue;
+				cursor: pointer;
+				text-align: center;
+				line-height: 100px;
+				font-weight: bold;
+				color: red;
+			}
+			#start:hover{
+				background:rgb(255, 165, 0); ;
+			}
+			 
+			#timeSp{
+				color: red;
+				font-size: 30px;
+			}
+			 .intro{
+			 	text-indent: 2em;
+			 	position: absolute;
+			 	left: 0px;
+			 	width: 200px;
+			 	height: 500px;
+			 	background: rgba(0,0,0,0.4);
+			 	font-family: "黑体";
+			 	font-size: 18px;
+			 	text-align: center;
+			 	line-height: 33px;
+			 	padding: 15px;
+			 	border: 5px solid orange;
+			 	transition: left 0.5s cubic-bezier(0.57, 0.04, 0.18, 0.9) 0s;
+			 }
+			 .intro h2{
+			 	margin: 10px 0;
+			 	line-height: 50px;
+			 }
+			 /*隐藏*/
+			 .intro.hidd{
+			 	left: -200px; 
+			 	
+			 }
+			 .intro h3{
+			 	margin-bottom: 20px;
+			 }
+			 #sx{
+			 	position: absolute;
+			 	right: 10px;
+			 	top: 0px;
+			 	color: darkviolet;
+			 	cursor: pointer;
+			 	 
+			 }
+			 
+		</style>
+	</head>
+	<body>
+		<!--整个页面-->
+		 <div class="all">
+		 	 <!--玩家控制的球-->
+		 <div id = "playBoll">
+		 	
+		 </div>
+		<!--顶部-->
+		<div class="top">
+		 	你总共坚持了<span id="timeSp">0</span>秒
+		</div>
+		<div class="intro">
+			<span id="sx">X</span>
+			<h2 style="color: red;">七彩碰碰球</h2>
+				<span style="font-size: 25px;">游戏介绍 ： </span>
+				首先你要点击开始游戏，
+				然后你需要赶紧控制<span style="font-size: 23px;">鼠标</span>
+				拖动<span style="color: red;">红球，</span>
+				不要碰到的<span style="color: blue;">其他的</span>，
+				当任意一个<span style="color: blue;">其他的球</span>
+				撞到你控制的球，那么<span style="font-size: 20px; font-weight: bold;">游戏结束</span>。
+				来吧，看看你能<span style="color: orangered;font-size: 25px;">坚挺</span>多久！
+				
+		</div>
+		<div id="start" class="st">
+			开始游戏
+		</div>
+		
+		
+		<!--游戏区域-->
+		<div id="game" >
+		
+			<canvas id="can" width="600" height="500"></canvas>
+			
+		</div>		
+		<!--底部-->
+		<div class="footer">
+			
+		</div>
+		 </div>
+		
+		<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+		<script src="js/jsUtil2.js"></script>
+		<script type="text/javascript" src="js/boll3.js"></script>
+		
+		
+		<script type="text/javascript">
+			/*获取对象*/
+			var gameNd = document.getElementById("game");
+			var canNode = document.getElementById("can");
+			var timeSp = document.getElementById("timeSp");
+			var startBtn = document.getElementById("start");
+			var playBoll = zhuima.$("#playBoll");
+			//console.log(playboll.getAttribute(''))
+			var sx = document.getElementById("sx");
+			var sxspan = document.getElementsByClassName("intro")[0];
+			//console.log(sx);
+			var introNode = document.getElementsByClassName("intro")[0];
+			var score = document.getElementsByClassName('top')[0];//显示时间
+			//鼠标移入显示介绍			
+			introNode.onmouseenter = function(){
+				this.className = "intro";
+			}
+			introNode.onmouseleave = function(){
+				this.className = "intro hidd";
+			}
+			
+			//点击×号消失介绍
+			sx.onclick = function(){
+				 sxspan.className = "intro hidd";
+			}
+			//开始游戏介绍动画：从上掉下来
+			zhuima.fnMove(introNode,"top",-900,300,40,function(){
+				zhuima.fnMove(introNode,"top",300,20,25);
+			});
+			/*结束游戏动画*/
+		 	function endShow(){
+		 		$(score).animate({
+		 			top:"25px",
+		 			right:"500px",
+		 			fontSize:30
+		 		},2000);
+		 		$(timeSp).animate({
+		 			fontSize : 50
+		 		},500);
+		 		
+		 	}
+			
+			
+			//console.log(restart);
+			/*全局变量*/
+			//1、获取画布
+			var canNode = zhuima.$("#can");
+			//2得到画笔
+			var ctx = canNode.getContext("2d");
+			//ctx.fillStyle = "blue";
+			
+			/*获取画布的宽高*/			
+		 	var canWidth = canNode.width;		 
+		 	var canHeight = canNode.height;		 
+			var sec = 30;							//刷新时间间隔
+			var seconds = 0;							//玩家游戏时长
+			var count =0;	//记录点击开始按钮的次数
+			var timer;		//刷新屏幕的定时器
+			var t ;			//显示时间的定时器
+			var bollArr= [];
+			/*画布4个边界的坐标*/
+			var left = canNode.offsetLeft;		//304
+//			console.log(left);
+			var right = left+canWidth;			//904
+			//console.log(right);
+			var topDis = canNode.offsetTop;		//54
+			//console.log(topDis);
+			var bottomDis = topDis+canHeight;	//
+			//console.log(bottomDis);
+			/*玩家控制小球的半径*/
+			var pbr = (playBoll.offsetHeight)/2;
+			//console.log(pbr);
+			
+			
+			/*开始游戏点击事件*/
+			startBtn.onclick = function(){
+				 
+				
+				if(timer){
+					//console.log("清除");
+					clearInterval(timer);
+					clearInterval(t);
+					 
+				}
+				startGame();
+				
+			}
+				 
+		 	
+		 	/*方法：算出玩家控制的小球球心据画布原点的坐标
+		 	 * 
+		 	 */
+		 	function getBollxy(){
+		 		var x = playBoll.offsetLeft - left +pbr;
+		 		var y =  playBoll.offsetTop - topDis + pbr;
+		 		var obj = {
+		 			x:x,
+		 			y:y
+		 		}
+		 		return obj;
+		 	}
+		 	
+		 	/*方法：
+		 	 * 显示玩家坚持的游戏时间
+		 	 * 
+		 	 */
+		 	function showTime(){
+		 		var startTime = new Date().getTime();	//开始时间
+		 		
+				t = setInterval(function(){
+				seconds = (new Date().getTime() - startTime)/1000; 
+				timeSp.innerHTML=	Math.floor(seconds);
+				 
+				},500);
+				
+		 	}
+		 	/*开始游戏
+		 	 */
+		 	function startGame(){
+		 		/*创建弹弹球
+		 		 * 球心 x  y坐标  半径  ，x坐标速度 ，y坐标速度，画笔
+			 	速度不能设置为0
+			 	*/
+				var ball1 = new Ball(0,80,80,45,-2,4,"white");
+				var ball2 = new Ball(1,80,200,25,6,-6,"green");
+				var ball3 = new Ball(2,180,80,25,-3,-6,"pink");
+				var ball4 = new Ball(3,160,200,25,2,-7,"orange");
+				var ball5 = new Ball(4,200,100,30,-4,4,"gold");
+				var ball6 = new Ball(5,240,200,35,4,-4,"red");
+				var ball7 = new Ball(6,300,100,25,-6,-2,"brown");
+				var ball8 = new Ball(7,400,200,25,5,-1,"black");//brown royalblue coral
+				var ball9 = new Ball(8,360,300,30,-4,-4,"coral");
+				var ball10 = new Ball(9,500,100,25,3,3,"darkviolet");
+			
+				//定义数组存放球对象
+				bollArr = [ball1,ball2,ball3,ball4,ball5,ball6,ball7,ball8,ball9,ball10];
+				
+		 		//设置玩家球的初始坐标（相对画布）
+		 		playBoll.style['left'] = (canWidth/2-pbr) +'px';
+		 		playBoll.style['top']  = (canHeight-2*pbr) + 'px';
+		 		
+		 		//显示游戏时间
+				showTime();
+				
+				//设置玩家球可操作
+		 		//zhuima.drag(playBoll,left,right,topDis,bottomDis);
+				 zhuima.followMouse($(playBoll),$(gameNd));
+				
+				timer = setInterval(function(){
+				ctx.clearRect(0,0,canWidth,canHeight);	
+				 for(var m= 0;m<bollArr.length;m++){
+				 	if(bollArr[m].move() == -1){
+				 		gameover();
+				 		 break;
+				 	}
+				 }
+				 return;
+				 
+				},sec);
+		 		
+		 	}
+		 	/*游戏结束*/
+		 	function gameover(){
+		 		//玩家输了,游戏结束。
+		 		clearInterval(t);
+		 		clearInterval(timer);
+		 		$(document).off();	
+		 		endShow();
+		 	}
+		 	
+		 	
+		  
+		</script>
+	</body>
+</html>

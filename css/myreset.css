@@ -1,0 +1,103 @@
+
+/*清除自带的样式，设置默认的样式*/
+
+
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,  
+dl, dt, dd, ul, ol, li,  
+pre,  
+fieldset, button, input, textarea,  
+th, td {  
+    margin: 0;
+    padding: 0;
+}
+
+/*设置默认字体*/
+body,button, input, select, textarea {  
+    font: 14px;  
+}
+
+/* 重置列表元素 */
+ul, ol { list-style: none; }
+
+/* 重置文本格式元素 */
+a { 
+	 
+	text-decoration: none; 
+	}
+a:hover { text-decoration: none; }
+
+/*清除按钮的边框*/
+button{
+	 
+	border: 0;
+	outline: none;
+}
+/*设置一块居中的区域，宽度是1200px*/
+.w1200{
+		width: 1200px;
+		margin: 0 auto;
+	}
+.w600{
+	width: 600px;
+	margin: 0 auto;
+}
+	/*设置相对定位*/
+.pr{
+	position: relative;
+}
+/*设置绝对定位*/
+.pa{
+	position: absolute;
+}
+/*设置左浮动*/
+.fl{
+	/*display: inline-block;*/
+	float: left;
+}
+
+/*设置右边浮动*/
+.fr{
+	float: right;
+}
+/*设置超出浮动部分影藏*/
+.of-hid{
+	overflow: hidden;
+}
+
+/*设置三角图形*/
+.sanjiao{
+  		width: 0;
+  		height: 0;
+  		border: 150px solid transparent;
+  		border-bottom-color: firebrick; 
+  }
+  
+	
+
+/*设置返回*/
+.back a{
+	font-size: 30px;
+	color: gray;
+}
+
+
+/*分页效果的实现*/
+	#fy-list li{
+		float: left;
+		border:1px solid green;
+		padding:4px 10px;
+		cursor: pointer;
+		margin:0 3px;
+		 
+		 
+	}
+	#fy-list .off{
+		display: none;
+	}
+	#fy-list .active{
+		border:0;
+		font-weight: bold;
+	}
+
+

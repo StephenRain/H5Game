@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#qy{
+			width:600px;
+			height: 400px;
+			margin: 0 auto;
+			border: 2px solid red;
+			border-bottom-width: 10px;
+			border-right-width: 3px;
+		}
+		.box{
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			background: blue;
+		}
+		.btn{
+			width:100px;
+			background: blue;
+		}
+		</style>
+		
+	</head>
+	<body>
+		
+		<div id="qy">
+			<div class="box">
+				
+			</div>
+			
+		</div>
+		<div class="btn">
+				清除按钮
+		</div>
+		<script type="text/javascript" src="jsUtil2.js">
+			
+		</script>
+		<script type="text/javascript" src="jquery-1.7.2.js"></script>
+		<script type="text/javascript">
+			/*需求是：
+			 当鼠标进入一片区域，里面的一个元素自动跟着鼠标走
+			 * */
+			
+			var jfnode = $('#qy');
+			var jtnode = $('.box');
+			zhuima.followMouse(jtnode,jfnode);
+			
+			
+		</script>
+		
+		
+		 
+	</body>
+</html>
